@@ -1,0 +1,26 @@
+version: '3.4'
+services:
+    api-gateway:
+        image: planner/api-gateway:1.0
+        ports:
+            - "8081:8081"
+#        network_mode: host
+#        extra_hosts:
+#            planner.com: 127.0.0.1
+        volumes:
+            - /home/logs/elk/logback:/home/logs/elk/logback
+        networks:
+            - planner-microservices_subnet_1
+
+    planner.realms:
+        image: planner/realms:1.0
+        ports:
+            - "8082:8082"
+        volumes:
+            - /home/logs/elk/logback:/home/logs/elk/logback
+        networks:
+            - planner-microservices_subnet_1
+
+networks:
+    planner-microservices_subnet_1:
+        external: true

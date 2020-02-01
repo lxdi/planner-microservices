@@ -1,0 +1,59 @@
+version: '3.4'
+services:
+    api-gateway:
+        image: planner/api-gateway:1.0
+        ports:
+            - "8081:8081"
+#        network_mode: host
+#        extra_hosts:
+#            planner.com: 127.0.0.1
+        volumes:
+            - /home/logs/elk/logback:/home/logs/elk/logback
+
+    planner.realms:
+        image: planner/realms:1.0
+        ports:
+            - "8082:8082"
+            
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+        ports:
+          - "9200:9200"
+        environment:
+          - "discovery.type=single-node"
+        volumes:
+          - ./elasticsearch/data:/usr/share/elasticsearch/data:rw
+#        networks:
+#            - loggin-net
+
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.2.0
+#        networks:
+#            - loggin-net
+        ports:
+          - "5601:5601"
+        restart: on-failure
+        depends_on:
+          - elasticsearch
+
+    logstash:
+        image: docker.elastic.co/logstash/logstash:7.0.0
+        volumes:
+            - /c/Users/Alexander/docker-machine-shared/configs/logstash:/c/Users/Alexander/docker-machine-shared/configs/logstash
+            #- ./logstash/drivers/:/usr/share/logstash/drivers
+            - /home/logs/elk/logback:/home/logs/elk/logback
+        command: logstash -f /c/Users/Alexander/docker-machine-shared/configs/logstash/logstash.conf
+        #        env_file:
+        #          - core.env
+#        networks:
+#            - loggin-net
+        depends_on:
+            - elasticsearch
+
+    zipkin:
+        image: openzipkin/zipkin
+        ports:
+        - "9411:9411"
+
+#networks:
+#    loggin-net: {}

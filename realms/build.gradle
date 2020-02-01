@@ -1,0 +1,72 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+	id 'com.bmuschko.docker-remote-api' version '4.8.0'
+}
+
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+
+
+def dockerBuildDir = 'build/docker/'
+def imageVersion = '1.0'
+
+group = 'com.sogoodlabs'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:2.2.1.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.1.RELEASE'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//implementation 'com.h2database:h2'
+
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.springframework.cloud:spring-cloud-stream:3.0.1.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.0.1.RELEASE'
+
+	implementation "org.postgresql:postgresql:9.4.1212"
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+bootJar {
+	launchScript()
+}
+
+task createDockerfile(type: Dockerfile) {
+	destFile = project.file("$dockerBuildDir/Dockerfile")
+	from 'openjdk:8-jre-alpine'
+	copyFile jar.archiveName, '/app/planner-service.jar'
+	entryPoint 'java'
+	defaultCommand '-jar', '/app/planner-service.jar'
+	exposePort 8082
+	runCommand 'apk --update --no-cache add curl'
+	instruction 'HEALTHCHECK CMD curl -f http://localhost:8082/healthcheck || exit 1'
+}
+
+task syncJar(type: Copy) {
+	dependsOn assemble
+	from jar.archivePath
+	into dockerBuildDir
+}
+
+
+task buildImage(type: DockerBuildImage) {
+	dependsOn createDockerfile, syncJar
+	inputDir = project.file(dockerBuildDir)
+	tags = ["planner/realms:$imageVersion"]
+}

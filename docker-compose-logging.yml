@@ -1,0 +1,50 @@
+version: '3.4'
+services:
+            
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+        ports:
+          - "9200:9200"
+        environment:
+          - "discovery.type=single-node"
+        volumes:
+          - /c/Users/Alexander/docker-machine-shared/elasticsearch/data:/usr/share/elasticsearch/data:rw
+        networks:
+            - subnet_1
+
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.2.0
+#        networks:
+#            - loggin-net
+        ports:
+          - "5601:5601"
+        restart: on-failure
+#        depends_on:
+#          - elasticsearch
+        networks:
+          - subnet_1
+
+    logstash:
+        image: docker.elastic.co/logstash/logstash:7.0.0
+        volumes:
+            - /c/Users/Alexander/docker-machine-shared/configs/logstash:/c/Users/Alexander/docker-machine-shared/configs/logstash
+            #- ./logstash/drivers/:/usr/share/logstash/drivers
+            - /home/logs/elk/logback:/home/logs/elk/logback
+        command: logstash -f /c/Users/Alexander/docker-machine-shared/configs/logstash/logstash.conf
+        #        env_file:
+        #          - core.env
+        networks:
+            - subnet_1
+#        depends_on:
+#            - elasticsearch
+
+    zipkin:
+        image: openzipkin/zipkin
+        ports:
+        - "9411:9411"
+        networks:
+        - subnet_1
+
+networks:
+    subnet_1:
+        driver: bridge
