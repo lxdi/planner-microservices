@@ -3,16 +3,16 @@ services:
     postgres:
         image: postgres:9.4
         ports:
-            - "5432:5432"
+            - "5433:5432"
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             PGDATA: /data/postgres
         volumes:
-            - /data/postgres:/c/Users/Alexander/docker-machine-shared/db/data
-        networks:
-            - planner-microservices_subnet_1
+            - /home/alex/installs/planner2/postgres-data:/data/postgres
+#        networks:
+#            - planner-microservices_subnet_1
 
-networks:
-    planner-microservices_subnet_1:
-        external: true
+#networks:
+#    planner-microservices_subnet_1:
+#        external: true

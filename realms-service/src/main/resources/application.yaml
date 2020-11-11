@@ -1,0 +1,28 @@
+
+spring:
+    application.name: planner-realms
+    datasource:
+      url: jdbc:postgresql://postgres:5432/planner-realms
+      username: postgres
+      password: postgres
+    jpa.hibernate.ddl-auto: update
+
+server.port: 8080
+
+spring.zipkin.base-url: http://zipkin:9411/
+
+    ## PostgreSQL
+    #spring.jpa.database=POSTGRESQL
+    #spring.datasource.platform=postgres
+    #spring.datasource.driver-class-name=org.postgresql.Driver
+
+
+spring.cloud.stream.kafka.binder.brokers: kafka:9092
+
+spring.cloud.stream.bindings.api-gateway-bm-in.destination: api-gateway-bm
+spring.cloud.stream.bindings.api-gateway-bm-in.contentType: application/json
+
+  #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
+  #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
+
+logging.file: /home/alex/installs/planner2/logback/realms.log

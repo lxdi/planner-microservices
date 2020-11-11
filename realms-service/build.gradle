@@ -2,18 +2,10 @@ plugins {
 	id 'org.springframework.boot' version "$springBootVersion"
 	id 'io.spring.dependency-management' version "$springDependencyManagement"
 	id 'java'
-	id 'com.bmuschko.docker-remote-api' version '4.8.0'
 }
 
-import com.bmuschko.gradle.docker.tasks.image.Dockerfile
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-
-
-def dockerBuildDir = 'build/docker/'
-def imageVersion = '1.0'
-
 group = 'com.sogoodlabs'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -43,30 +35,10 @@ test {
 	useJUnitPlatform()
 }
 
-bootJar {
-	launchScript()
-}
+//bootJar {
+//	launchScript()
+//}
 
-task createDockerfile(type: Dockerfile) {
-	destFile = project.file("$dockerBuildDir/Dockerfile")
-	from 'openjdk:8-jre-alpine'
-	copyFile jar.archiveName, '/app/planner-service.jar'
-	entryPoint 'java'
-	defaultCommand '-jar', '/app/planner-service.jar'
-	exposePort 8082
-	runCommand 'apk --update --no-cache add curl'
-	instruction 'HEALTHCHECK CMD curl -f http://localhost:8082/healthcheck || exit 1'
-}
-
-task syncJar(type: Copy) {
-	dependsOn assemble
-	from jar.archivePath
-	into dockerBuildDir
-}
-
-
-task buildImage(type: DockerBuildImage) {
-	dependsOn createDockerfile, syncJar
-	inputDir = project.file(dockerBuildDir)
-	tags = ["planner/realms:$imageVersion"]
+bootBuildImage {
+	imageName = "planner2/realms-service:$version"
 }

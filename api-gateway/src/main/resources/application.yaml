@@ -1,0 +1,19 @@
+
+spring.application:
+    name: planner-api-gateway
+
+server.port: 8080
+
+spring.zipkin.base-url: http://zipkin:9411/
+
+spring.cloud.stream.kafka.binder.brokers: kafka:9092
+spring.cloud.stream.bindings.api-gateway-bm-out.destination: api-gateway-bm
+spring.cloud.stream.bindings.api-gateway-bm-out.contentType: application/json
+
+  #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
+  #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
+
+logging.file.name: /home/alex/installs/planner2/logback/api-gateway.log
+
+service.name: planner-api-gateway
+services.realms.url: http://realms-service:8080
