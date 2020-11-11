@@ -1,2 +1,2 @@
 rootProject.name = 'planner-microservices'
-include 'api-gateway', 'realms'
+include 'api-gateway', 'realms-service'
