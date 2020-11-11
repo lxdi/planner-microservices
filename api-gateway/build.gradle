@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.1.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'org.springframework.boot' version "$springBootVersion"
+	id 'io.spring.dependency-management' version "$springDependencyManagement"
 	id 'java'
 	id 'com.bmuschko.docker-remote-api' version '4.8.0'
 }
@@ -24,19 +24,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	
 	//sleuth
-	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:2.2.1.RELEASE'
+	implementation "org.springframework.cloud:spring-cloud-starter-sleuth:$springCloudVersion"
 	
 	//zipkin
-	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.1.RELEASE'
+	implementation "org.springframework.cloud:spring-cloud-starter-zipkin:$springCloudVersion"
 	
 	//feign
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:2.2.1.RELEASE'
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudVersion"
 
 	// for using kafka natively
 	implementation 'org.springframework.kafka:spring-kafka'
 	
-	implementation 'org.springframework.cloud:spring-cloud-stream:3.0.1.RELEASE'
-	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:3.0.1.RELEASE'
+	implementation "org.springframework.cloud:spring-cloud-stream:$springCloudStreamVersion"
+	implementation "org.springframework.cloud:spring-cloud-starter-stream-kafka:$springCloudStreamVersion"
 	
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
