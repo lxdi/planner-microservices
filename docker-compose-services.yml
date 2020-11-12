@@ -1,26 +1,27 @@
 version: '3.4'
 services:
     api-gateway:
-        image: planner/api-gateway:1.0
+        image: planner2/api-gateway:0.0.1
         ports:
-            - "8081:8081"
-#        network_mode: host
-#        extra_hosts:
-#            planner.com: 127.0.0.1
+            - "8090:8080"
+        #        network_mode: host
         volumes:
-            - /home/logs/elk/logback:/home/logs/elk/logback
-        networks:
-            - planner-microservices_subnet_1
+            - /home/alex/installs/planner2/logback:/workspace/logs
+#        depends_on:
+#            - kafka
 
-    planner.realms:
-        image: planner/realms:1.0
+    realms-service:
+        image: planner2/realms-service:0.0.1
         ports:
-            - "8082:8082"
+            - "8091:8080"
         volumes:
-            - /home/logs/elk/logback:/home/logs/elk/logback
-        networks:
-            - planner-microservices_subnet_1
+            - /home/alex/installs/planner2/logback:/workspace/logs
+#        depends_on:
+#            - postgres
+#            - kafka
+#        networks:
+#            - planner-microservices_subnet_1
 
-networks:
-    planner-microservices_subnet_1:
-        external: true
+#networks:
+#    planner-microservices_subnet_1:
+#        external: true

@@ -8,7 +8,7 @@ services:
             - "8090:8080"
 #        network_mode: host
         volumes:
-            - /home/alex/installs/planner2/logback:/home/alex/installs/planner2/logback
+            - /home/alex/installs/planner2/logback:/workspace/logs
         depends_on:
             - kafka
 
@@ -17,7 +17,7 @@ services:
         ports:
             - "8091:8080"
         volumes:
-            - /home/alex/installs/planner2/logback:/home/alex/installs/planner2/logback
+            - /home/alex/installs/planner2/logback:/workspace/logs
         depends_on:
             - postgres
             - kafka
