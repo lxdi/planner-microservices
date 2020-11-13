@@ -1,6 +1,6 @@
 package com.sogoodlabs.planner.controllers;
 
-import com.sogoodlabs.planner.streams.BasicMessagesStreams;
+import com.sogoodlabs.planner.streams.ChannelsService;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class EventsController {
     private static final Logger LOG = Logger.getLogger(EventsController.class.getName());
 
     @Autowired
-    BasicMessagesStreams basicMessagesStreams;
+    ChannelsService realmsStreamConnector;
 
     @PostMapping("/realms")
     public String realms(@RequestBody String event){
@@ -54,7 +54,7 @@ public class EventsController {
 
         LOG.info("Sending event (steams) - " + event);
 
-        MessageChannel messageChannel = basicMessagesStreams.outboundGreetings();
+        MessageChannel messageChannel = realmsStreamConnector.realmsIn();
         messageChannel.send(MessageBuilder
                 .withPayload(event)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

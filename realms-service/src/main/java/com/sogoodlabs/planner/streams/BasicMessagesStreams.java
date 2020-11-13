@@ -7,10 +7,10 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface BasicMessagesStreams {
 
-    @Input("api-gateway-bm-in")
-    SubscribableChannel inboundGreetings();
+    @Input("realms-in")
+    SubscribableChannel realmsIn();
 
-//    @Output("api-gateway-bm-out")
-//    MessageChannel outboundGreetings();
+    @Output("realms-events")
+    MessageChannel realmsEvents();
 
 }

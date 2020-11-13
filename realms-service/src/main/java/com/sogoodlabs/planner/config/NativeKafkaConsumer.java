@@ -1,24 +1,13 @@
 package com.sogoodlabs.planner.config;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.time.Duration;
-import java.util.Collections;
-import java.util.Properties;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 @Component
-public class InitKafkaConsumer {
+public class NativeKafkaConsumer {
 
-    private static final Logger LOG = Logger.getLogger(InitKafkaConsumer.class.getName());
+    private static final Logger LOG = Logger.getLogger(NativeKafkaConsumer.class.getName());
 
 //    @PostConstruct
 //    public void init(){
@@ -52,11 +41,6 @@ public class InitKafkaConsumer {
 //        });
 //
 //    }
-
-    @StreamListener("api-gateway-bm-in")
-    public void handleGreetings(@Payload String message) {
-        LOG.info("Event received (stream): "+message);
-    }
 
 
 }

@@ -5,12 +5,12 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
-public interface BasicMessagesStreams {
+public interface ChannelsService {
 
 //    @Input("api-gateway-bm-in")
 //    SubscribableChannel inboundGreetings();
 
-    @Output("api-gateway-bm-out")
-    MessageChannel outboundGreetings();
+    @Output("realms-in")
+    MessageChannel realmsIn();
 
 }
