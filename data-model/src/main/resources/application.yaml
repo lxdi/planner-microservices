@@ -1,5 +1,11 @@
 
-spring.application.name: planner-realms
+spring:
+    application.name: planner-realms
+    datasource:
+      url: jdbc:postgresql://postgres:5432/planner-realms
+      username: postgres
+      password: postgres
+    jpa.hibernate.ddl-auto: update
 
 server.port: 8080
 
@@ -13,11 +19,8 @@ spring.zipkin.base-url: http://zipkin:9411/
 
 spring.cloud.stream.kafka.binder.brokers: kafka:9092
 
-spring.cloud.stream.bindings.realms-in.destination: realms-in
-spring.cloud.stream.bindings.realms-in.contentType: application/json
-
-spring.cloud.stream.bindings.realms-events.destination: realms-events
-spring.cloud.stream.bindings.realms-events.contentType: application/json
+spring.cloud.stream.bindings.api-gateway-bm-in.destination: api-gateway-bm
+spring.cloud.stream.bindings.api-gateway-bm-in.contentType: application/json
 
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json

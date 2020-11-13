@@ -26,6 +26,12 @@ dependencies {
 
 	implementation "org.postgresql:postgresql:9.4.1212"
 
+//	compile project(':data-model')
+
+	compile(project(":data-model")) {
+		transitive = false
+	}
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}

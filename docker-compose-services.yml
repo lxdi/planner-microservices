@@ -22,6 +22,16 @@ services:
 #        networks:
 #            - planner-microservices_subnet_1
 
+    data-access:
+        image: planner2/data-access-service:0.0.1
+        ports:
+            - "8092:8080"
+        volumes:
+            - /home/alex/installs/planner2/logback:/workspace/logs
+#        depends_on:
+#            - postgres
+#            - kafka
+
 #networks:
 #    planner-microservices_subnet_1:
 #        external: true

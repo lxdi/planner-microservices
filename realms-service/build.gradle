@@ -17,16 +17,12 @@ dependencies {
 	implementation "org.springframework.cloud:spring-cloud-starter-sleuth:$springCloudVersion"
 	implementation "org.springframework.cloud:spring-cloud-starter-zipkin:$springCloudVersion"
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'com.h2database:h2'
-
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation "org.springframework.cloud:spring-cloud-stream:$springCloudStreamVersion"
 	implementation "org.springframework.cloud:spring-cloud-starter-stream-kafka:$springCloudStreamVersion"
 
-	implementation "org.postgresql:postgresql:9.4.1212"
-
 	compile project(':data-common')
+	compile project(':data-model')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
