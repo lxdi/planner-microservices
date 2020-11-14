@@ -18,3 +18,9 @@ service.name: planner-api-gateway
 services.realms.url: http://realms-service:8080
 
 logging.file.name: logs/api-gateway.log
+
+zuul:
+    routes:
+        realms:
+            path: /**
+            url: http://realms-service:8080

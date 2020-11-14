@@ -28,9 +28,12 @@ dependencies {
 
 //	compile project(':data-model')
 
+	compile project(':data-common')
 	compile(project(":data-model")) {
 		transitive = false
 	}
+
+	implementation files ('../libs/common-mapper-1.0.1.jar')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
