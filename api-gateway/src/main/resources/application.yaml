@@ -21,6 +21,11 @@ logging.file.name: logs/api-gateway.log
 
 zuul:
     routes:
+        realms/get:
+            path: /realms/get/**
+            url: http://data-access:8080
+            stripPrefix: false
         realms:
-            path: /**
+            path: /realms/**
             url: http://realms-service:8080
+            stripPrefix: false
