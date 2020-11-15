@@ -1,4 +1,4 @@
-package com.sogoodlabs.planner.config;
+package com.sogoodlabs.planner.realms.service.config;
 
 import org.springframework.stereotype.Component;
 

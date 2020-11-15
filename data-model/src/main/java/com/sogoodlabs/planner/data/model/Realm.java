@@ -1,4 +1,4 @@
-package com.sogoodlabs.planner.data.common.data.entities;
+package com.sogoodlabs.planner.data.model;
 
 
 import javax.persistence.Entity;

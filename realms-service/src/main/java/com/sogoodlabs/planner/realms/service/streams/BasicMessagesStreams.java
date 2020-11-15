@@ -1,4 +1,4 @@
-package com.sogoodlabs.planner.streams;
+package com.sogoodlabs.planner.realms.service.streams;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;

@@ -2,7 +2,7 @@ package com.sogoodlabs.planner.dataaccess.listener;
 
 
 import com.sogoodlabs.common_mapper.CommonMapper;
-import com.sogoodlabs.planner.data.common.data.entities.Realm;
+import com.sogoodlabs.planner.data.model.Realm;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
@@ -11,7 +11,6 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 

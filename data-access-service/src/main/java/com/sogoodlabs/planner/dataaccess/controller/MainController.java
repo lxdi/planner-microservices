@@ -1,6 +1,6 @@
 package com.sogoodlabs.planner.dataaccess.controller;
 
-import com.sogoodlabs.planner.data.common.data.entities.Realm;
+import com.sogoodlabs.planner.data.model.Realm;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

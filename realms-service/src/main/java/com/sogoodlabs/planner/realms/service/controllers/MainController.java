@@ -1,8 +1,8 @@
-package com.sogoodlabs.planner.controllers;
+package com.sogoodlabs.planner.realms.service.controllers;
 
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
-import com.sogoodlabs.planner.streams.BasicMessagesStreams;
+import com.sogoodlabs.planner.realms.service.streams.BasicMessagesStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

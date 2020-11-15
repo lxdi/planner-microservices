@@ -1,10 +1,9 @@
-package com.sogoodlabs.planner.listener;
+package com.sogoodlabs.planner.realms.service.listener;
 
-import com.sogoodlabs.planner.config.NativeKafkaConsumer;
-import com.sogoodlabs.planner.data.common.data.entities.Realm;
+import com.sogoodlabs.planner.data.model.Realm;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
-import com.sogoodlabs.planner.streams.BasicMessagesStreams;
+import com.sogoodlabs.planner.realms.service.streams.BasicMessagesStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.integration.support.MessageBuilder;
