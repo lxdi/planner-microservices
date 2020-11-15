@@ -12,28 +12,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 @EnableBinding(MessageStreams.class)
 @EntityScan("com.sogoodlabs.planner.data.model")
-public class DataAccessApplication {
+public class Application {
 
-
-	@Bean
-	public IEntityById entityById(){
-		return new IEntityById(){
-			@Override
-			public Object get(long l, Class aClass) {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-
-	@Bean
-	public CommonMapper commonMapper(IEntityById entityById){
-		com.sogoodlabs.common_mapper.Configuration mapperConfig = new com.sogoodlabs.common_mapper.Configuration();
-		mapperConfig.mapEmptyFields = true;
-		return new CommonMapper(entityById, mapperConfig);
-	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(DataAccessApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

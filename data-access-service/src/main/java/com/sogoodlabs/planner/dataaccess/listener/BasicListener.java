@@ -22,4 +22,9 @@ public class BasicListener {
         basicEventHandler.handleRealmsEvent(event);
     }
 
+    @StreamListener("targets-events")
+    public void targetsIn(@Payload Event event) {
+        basicEventHandler.handleTargetsEvent(event);
+    }
+
 }

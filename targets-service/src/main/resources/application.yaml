@@ -1,11 +1,5 @@
 
-spring:
-    application.name: planner-data-access
-    datasource:
-      url: jdbc:postgresql://postgres:5432/planner-realms
-      username: postgres
-      password: postgres
-    jpa.hibernate.ddl-auto: update
+spring.application.name: planner-targets
 
 server.port: 8080
 
@@ -19,13 +13,12 @@ spring.zipkin.base-url: http://zipkin:9411/
 
 spring.cloud.stream.kafka.binder.brokers: kafka:9092
 
-spring.cloud.stream.bindings.realms-events.destination: realms-events
-spring.cloud.stream.bindings.realms-events.contentType: application/json
-
 spring.cloud.stream.bindings.targets-events.destination: targets-events
 spring.cloud.stream.bindings.targets-events.contentType: application/json
 
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
 
-logging.file.name: logs/data-access.log
+services.data-access-service.url: http://data-access:8080
+
+logging.file.name: logs/targets.log

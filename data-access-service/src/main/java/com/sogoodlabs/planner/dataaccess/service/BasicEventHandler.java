@@ -5,7 +5,9 @@ import com.sogoodlabs.common_mapper.CommonMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.data.model.Realm;
+import com.sogoodlabs.planner.data.model.Target;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
+import com.sogoodlabs.planner.dataaccess.data.TargetsRepository;
 import com.sogoodlabs.planner.dataaccess.listener.BasicListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class BasicEventHandler {
     private RealmsRepository realmsRepository;
 
     @Autowired
+    private TargetsRepository targetsRepository;
+
+    @Autowired
     private CommonMapper commonMapper;
 
     public void handleRealmsEvent(Event event){
@@ -35,6 +40,23 @@ public class BasicEventHandler {
         if(event.getEventType() == EventType.DELETE){
             log.info("Deleting realm by id: " + event.getPayload());
             realmsRepository.deleteById((String) event.getPayload());
+            return;
+        }
+
+        log.info("Unknown type of event; skipping");
+    }
+
+    public void handleTargetsEvent(Event event){
+        if(event.getEventType() == EventType.CREATE){
+            Target target = commonMapper.mapToEntity((Map)event.getPayload(), new Target());
+            log.info("Creating target: " + target.getTitle() + ", id: " + target.getId());
+            targetsRepository.save(target);
+            return;
+        }
+
+        if(event.getEventType() == EventType.DELETE){
+            log.info("Deleting target by id: " + event.getPayload());
+            targetsRepository.deleteById((String) event.getPayload());
             return;
         }
 
