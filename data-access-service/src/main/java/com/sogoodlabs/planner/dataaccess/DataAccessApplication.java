@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableBinding(MessageStreams.class)
-@EntityScan("com.sogoodlabs.planner.data.common.data.entities")
+@EntityScan("com.sogoodlabs.planner.data.model")
 public class DataAccessApplication {
 
 

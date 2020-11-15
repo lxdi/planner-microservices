@@ -33,6 +33,13 @@ public class BasicListener {
             realmsRepository.save(realm);
             return;
         }
+
+        if(event.getEventType() == EventType.DELETE){
+            log.info("Deleting realm by id: " + event.getPayload());
+            realmsRepository.deleteById((String) event.getPayload());
+            return;
+        }
+
         log.info("Unknown type of event; skipping");
     }
 

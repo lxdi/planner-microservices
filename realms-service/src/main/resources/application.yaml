@@ -22,4 +22,6 @@ spring.cloud.stream.bindings.realms-events.contentType: application/json
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
 
+services.data-access-service.url: http://data-access:8080
+
 logging.file.name: logs/realms.log
