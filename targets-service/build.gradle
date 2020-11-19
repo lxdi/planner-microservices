@@ -41,5 +41,5 @@ test {
 //}
 
 bootBuildImage {
-	imageName = "planner2/targets-service:$version"
+	imageName = "planner2/$project.name:$version"
 }

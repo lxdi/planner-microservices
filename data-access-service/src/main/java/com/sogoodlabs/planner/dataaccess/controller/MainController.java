@@ -1,8 +1,7 @@
 package com.sogoodlabs.planner.dataaccess.controller;
 
 import com.sogoodlabs.common_mapper.CommonMapper;
-import com.sogoodlabs.planner.data.model.Realm;
-import com.sogoodlabs.planner.data.model.Target;
+import com.sogoodlabs.planner.dataaccess.data.MeansRepository;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
 import com.sogoodlabs.planner.dataaccess.data.TargetsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +23,17 @@ public class MainController {
     private TargetsRepository targetsRepository;
 
     @Autowired
+    private MeansRepository meansRepository;
+
+    @Autowired
     private CommonMapper commonMapper;
 
     @GetMapping("/realms/get/all")
-    public List<Realm> getRealms(){
-        List<Realm> result = new ArrayList<>();
-        realmsRepository.findAll().forEach(result::add);
+    public List<Map<String, Object>> getRealms(){
+        List<Map<String, Object>> result = new ArrayList<>();
+        realmsRepository.findAll().forEach(realm -> {
+            result.add(commonMapper.mapToDto(realm));
+        });
         return result;
     }
 
@@ -40,9 +44,11 @@ public class MainController {
     }
 
     @GetMapping("/targets/get/all")
-    public List<Target> getTargetsAll(){
-        List<Target> result = new ArrayList<>();
-        targetsRepository.findAll().forEach(result::add);
+    public List<Map<String, Object>> getTargetsAll(){
+        List<Map<String, Object>> result = new ArrayList<>();
+        targetsRepository.findAll().forEach(realm -> {
+            result.add(commonMapper.mapToDto(realm));
+        });
         return result;
     }
 
@@ -52,5 +58,20 @@ public class MainController {
                 .orElseThrow(() -> new NullPointerException("Target not found by id: " + id)));
     }
 
+
+    @GetMapping("/means/get/all")
+    public List<Map<String, Object>> getMeansAll(){
+        List<Map<String, Object>> result = new ArrayList<>();
+        meansRepository.findAll().forEach(realm -> {
+            result.add(commonMapper.mapToDto(realm));
+        });
+        return result;
+    }
+
+    @GetMapping("/means/get")
+    public Map<String, Object> getMeansById(@RequestParam("id") String id){
+        return commonMapper.mapToDto(meansRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Mean not found by id: " + id)));
+    }
 
 }

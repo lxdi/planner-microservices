@@ -50,5 +50,5 @@ test {
 //}
 
 bootBuildImage {
-	imageName = "planner2/api-gateway:$version"
+	imageName = "planner2/$project.name:$version"
 }

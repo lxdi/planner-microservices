@@ -27,4 +27,9 @@ public class BasicListener {
         basicEventHandler.handleTargetsEvent(event);
     }
 
+    @StreamListener("means-events")
+    public void meansIn(@Payload Event event) {
+        basicEventHandler.handleMeansEvent(event);
+    }
+
 }

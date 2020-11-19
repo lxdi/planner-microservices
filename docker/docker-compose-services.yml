@@ -29,6 +29,13 @@ services:
         volumes:
             - /home/alex/installs/planner2/logback:/workspace/logs
 
+    means-service:
+        image: planner2/means-service:0.0.1
+        #        ports:
+        #            - "8091:8080"
+        volumes:
+            - /home/alex/installs/planner2/logback:/workspace/logs
+
     data-access:
         image: planner2/data-access-service:0.0.1
         ports:

@@ -1,19 +1,13 @@
-package com.sogoodlabs.planner.dataaccess.config;
+package com.sogoodlabs.planner.means.service.streams;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.SubscribableChannel;
 
-public interface MessageStreams {
+public interface BasicMessagesStreams {
 
-    @Input("realms-events")
-    MessageChannel realmsIn();
-
-    @Input("targets-events")
-    MessageChannel targetsIn();
-
-    @Input("means-events")
+    @Output("means-events")
     MessageChannel meansEvents();
 
 }
