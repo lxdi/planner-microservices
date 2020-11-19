@@ -1,12 +1,13 @@
 package com.sogoodlabs.planner.data.model;
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Mean {
+public class Task {
 
     @Id
     private String id;
@@ -14,7 +15,8 @@ public class Mean {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Realm realm;
+    private Layer layer;
+
 
     public String getId() {
         return id;
@@ -26,14 +28,16 @@ public class Mean {
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public Realm getRealm() {
-        return realm;
+    public Layer getLayer() {
+        return layer;
     }
-    public void setRealm(Realm realm) {
-        this.realm = realm;
+
+    public void setLayer(Layer layer) {
+        this.layer = layer;
     }
 }

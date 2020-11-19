@@ -1,6 +1,7 @@
 package com.sogoodlabs.planner.dataaccess.controller;
 
 import com.sogoodlabs.common_mapper.CommonMapper;
+import com.sogoodlabs.planner.dataaccess.data.LayersRepository;
 import com.sogoodlabs.planner.dataaccess.data.MeansRepository;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
 import com.sogoodlabs.planner.dataaccess.data.TargetsRepository;
@@ -24,6 +25,9 @@ public class MainController {
 
     @Autowired
     private MeansRepository meansRepository;
+
+    @Autowired
+    private LayersRepository layersRepository;
 
     @Autowired
     private CommonMapper commonMapper;
@@ -71,7 +75,22 @@ public class MainController {
     @GetMapping("/means/get")
     public Map<String, Object> getMeansById(@RequestParam("id") String id){
         return commonMapper.mapToDto(meansRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException("Mean not found by id: " + id)));
+                .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id)));
+    }
+
+    @GetMapping("/layers/get/all")
+    public List<Map<String, Object>> getLayersAll(){
+        List<Map<String, Object>> result = new ArrayList<>();
+        layersRepository.findAll().forEach(realm -> {
+            result.add(commonMapper.mapToDto(realm));
+        });
+        return result;
+    }
+
+    @GetMapping("/layers/get")
+    public Map<String, Object> getLayerById(@RequestParam("id") String id){
+        return commonMapper.mapToDto(layersRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id)));
     }
 
 }

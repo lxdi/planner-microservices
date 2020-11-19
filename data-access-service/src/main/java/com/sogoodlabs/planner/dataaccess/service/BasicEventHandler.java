@@ -4,9 +4,11 @@ package com.sogoodlabs.planner.dataaccess.service;
 import com.sogoodlabs.common_mapper.CommonMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
+import com.sogoodlabs.planner.data.model.Layer;
 import com.sogoodlabs.planner.data.model.Mean;
 import com.sogoodlabs.planner.data.model.Realm;
 import com.sogoodlabs.planner.data.model.Target;
+import com.sogoodlabs.planner.dataaccess.data.LayersRepository;
 import com.sogoodlabs.planner.dataaccess.data.MeansRepository;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
 import com.sogoodlabs.planner.dataaccess.data.TargetsRepository;
@@ -30,6 +32,9 @@ public class BasicEventHandler {
 
     @Autowired
     private MeansRepository meansRepository;
+
+    @Autowired
+    private LayersRepository layersRepository;
 
     @Autowired
     private CommonMapper commonMapper;
@@ -79,6 +84,23 @@ public class BasicEventHandler {
         if(event.getEventType() == EventType.DELETE){
             log.info("Deleting mean by id: " + event.getPayload());
             meansRepository.deleteById((String) event.getPayload());
+            return;
+        }
+
+        log.info("Unknown type of event; skipping");
+    }
+
+    public void handleLayersEvent(Event event){
+        if(event.getEventType() == EventType.CREATE){
+            Layer layer = commonMapper.mapToEntity((Map)event.getPayload(), new Layer());
+            log.info("Creating layer: " + layer.getNum() + ", id: " + layer.getId());
+            layersRepository.save(layer);
+            return;
+        }
+
+        if(event.getEventType() == EventType.DELETE){
+            log.info("Deleting layer by id: " + event.getPayload());
+            layersRepository.deleteById((String) event.getPayload());
             return;
         }
 

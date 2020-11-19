@@ -15,6 +15,9 @@ public class MainController {
 
     private static Logger log = Logger.getLogger(MainController.class.getName());
 
+    private static final String REALM_ID = "realmid";
+    private static final String MEAN_ID = "meanid";
+
     @Autowired
     private DataAccessClient dataAccessClient;
 
@@ -33,10 +36,28 @@ public class MainController {
     }
 
     @PostMapping("/means/create")
-    public void createRealm(@RequestBody HashMap<String, Object> targetDto){
+    public void createRealm(@RequestBody HashMap<String, Object> meanDto){
 
-        String realmId = (String) targetDto.get("realmid");
+        checkRealm((String) meanDto.get(REALM_ID));
 
+        log.info("Creating mean with title " + meanDto.get("title"));
+
+        String meanId = UUID.randomUUID().toString();
+        meanDto.put("id", meanId);
+
+        Event event = new Event();
+        event.setEventType(EventType.CREATE);
+        event.setPayload(meanDto);
+
+        eventBusService.publishMeanEvent(event);
+
+        if(meanDto.get("layers")!=null){
+            createLayers((List<HashMap<String, Object>>) meanDto.get("layers"), meanId);
+        }
+
+    }
+
+    private void checkRealm(String realmId){
         if(realmId==null){
             throw new RuntimeException("Mean should have a realm");
         }
@@ -44,18 +65,26 @@ public class MainController {
         if(dataAccessClient.getRealmById(realmId)==null){
             throw new RuntimeException("Error while creating mean - realm with id "+ realmId + " doesn't exist");
         }
+    }
 
-        log.info("Creating mean with title " + targetDto.get("title"));
+    private void createLayers(List<HashMap<String, Object>> layersArrList, String meanId){
 
-        targetDto.put("id", UUID.randomUUID().toString());
+        log.info("Creating layers for mean: " + meanId);
 
-        Event event = new Event();
-        event.setEventType(EventType.CREATE);
-        event.setPayload(targetDto);
+        for(HashMap<String, Object> layerDto : layersArrList){
+            layerDto.put("id", UUID.randomUUID().toString());
+            layerDto.put(MEAN_ID, meanId);
 
-        eventBusService.publishEvent(event);
+            Event event = new Event();
+            event.setEventType(EventType.CREATE);
+            event.setPayload(layerDto);
+
+            eventBusService.publishLayerEvent(event);
+        }
+
 
     }
+
 
     @DeleteMapping("/means/delete")
     public void deleteRealm(@RequestParam String id){
@@ -70,7 +99,7 @@ public class MainController {
         event.setEventType(EventType.DELETE);
         event.setPayload(id);
 
-        eventBusService.publishEvent(event);
+        eventBusService.publishMeanEvent(event);
     }
 
 

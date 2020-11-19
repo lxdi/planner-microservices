@@ -16,4 +16,7 @@ public interface MessageStreams {
     @Input("means-events")
     MessageChannel meansEvents();
 
+    @Input("layers-events")
+    MessageChannel layersEvents();
+
 }

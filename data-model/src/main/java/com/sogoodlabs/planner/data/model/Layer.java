@@ -6,34 +6,37 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Mean {
+public class Layer {
 
     @Id
     private String id;
 
-    private String title;
+    private Integer num;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Realm realm;
+    private Mean mean;
 
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
+    public Integer getNum() {
+        return num;
     }
 
-    public Realm getRealm() {
-        return realm;
+    public void setNum(Integer num) {
+        this.num = num;
     }
-    public void setRealm(Realm realm) {
-        this.realm = realm;
+
+    public Mean getMean() {
+        return mean;
+    }
+
+    public void setMean(Mean mean) {
+        this.mean = mean;
     }
 }

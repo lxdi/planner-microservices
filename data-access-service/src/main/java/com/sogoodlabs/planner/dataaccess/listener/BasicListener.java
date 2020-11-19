@@ -32,4 +32,9 @@ public class BasicListener {
         basicEventHandler.handleMeansEvent(event);
     }
 
+    @StreamListener("layers-events")
+    public void layersIn(@Payload Event event) {
+        basicEventHandler.handleLayersEvent(event);
+    }
+
 }

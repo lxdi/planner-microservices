@@ -15,8 +15,17 @@ public class EventBusService {
     @Autowired
     private BasicMessagesStreams streams;
 
-    public void publishEvent(Event event){
+    public void publishMeanEvent(Event event){
         MessageChannel messageChannel = streams.meansEvents();
+        doPublish(messageChannel, event);
+    }
+
+    public void publishLayerEvent(Event event){
+        MessageChannel messageChannel = streams.layersEvents();
+        doPublish(messageChannel, event);
+    }
+
+    private void doPublish(MessageChannel messageChannel, Event event){
         messageChannel.send(MessageBuilder
                 .withPayload(event)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

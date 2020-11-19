@@ -10,4 +10,7 @@ public interface BasicMessagesStreams {
     @Output("means-events")
     MessageChannel meansEvents();
 
+    @Output("layers-events")
+    MessageChannel layersEvents();
+
 }
