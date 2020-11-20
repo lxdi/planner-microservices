@@ -1,7 +1,8 @@
 package com.sogoodlabs.planner.dataaccess.service;
 
 
-import com.sogoodlabs.common_mapper.CommonMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.data.model.Layer;
@@ -36,12 +37,11 @@ public class BasicEventHandler {
     @Autowired
     private LayersRepository layersRepository;
 
-    @Autowired
-    private CommonMapper commonMapper;
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    public void handleRealmsEvent(Event event){
+    public void handleRealmsEvent(Event event) throws JsonProcessingException {
         if(event.getEventType() == EventType.CREATE){
-            Realm realm = commonMapper.mapToEntity((Map)event.getPayload(), new Realm());
+            Realm realm = mapper.readValue(event.getPayload(), Realm.class);
             log.info("Creating realm: " + realm.getTitle() + ", id: " + realm.getId());
             realmsRepository.save(realm);
             return;
@@ -56,9 +56,9 @@ public class BasicEventHandler {
         log.info("Unknown type of event; skipping");
     }
 
-    public void handleTargetsEvent(Event event){
+    public void handleTargetsEvent(Event event) throws JsonProcessingException {
         if(event.getEventType() == EventType.CREATE){
-            Target target = commonMapper.mapToEntity((Map)event.getPayload(), new Target());
+            Target target = mapper.readValue(event.getPayload(), Target.class);
             log.info("Creating target: " + target.getTitle() + ", id: " + target.getId());
             targetsRepository.save(target);
             return;
@@ -73,9 +73,9 @@ public class BasicEventHandler {
         log.info("Unknown type of event; skipping");
     }
 
-    public void handleMeansEvent(Event event){
+    public void handleMeansEvent(Event event) throws JsonProcessingException {
         if(event.getEventType() == EventType.CREATE){
-            Mean mean = commonMapper.mapToEntity((Map)event.getPayload(), new Mean());
+            Mean mean = mapper.readValue(event.getPayload(), Mean.class);
             log.info("Creating mean: " + mean.getTitle() + ", id: " + mean.getId());
             meansRepository.save(mean);
             return;
@@ -90,9 +90,9 @@ public class BasicEventHandler {
         log.info("Unknown type of event; skipping");
     }
 
-    public void handleLayersEvent(Event event){
+    public void handleLayersEvent(Event event) throws JsonProcessingException {
         if(event.getEventType() == EventType.CREATE){
-            Layer layer = commonMapper.mapToEntity((Map)event.getPayload(), new Layer());
+            Layer layer = mapper.readValue(event.getPayload(), Layer.class);
             log.info("Creating layer: " + layer.getNum() + ", id: " + layer.getId());
             layersRepository.save(layer);
             return;

@@ -1,7 +1,10 @@
 package com.sogoodlabs.planner.realms.service.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
+import com.sogoodlabs.planner.data.model.Realm;
 import com.sogoodlabs.planner.realms.service.client.DataAccessClient;
 import com.sogoodlabs.planner.realms.service.service.EventBusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ public class MainController {
     @Autowired
     private EventBusService eventBusService;
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     @GetMapping
     public String heartbeat(){
         return "heartbeat";
@@ -33,15 +38,15 @@ public class MainController {
     }
 
     @PostMapping("/realms/create")
-    public void createRealm(@RequestBody HashMap<String, Object> realmDto){
+    public void createRealm(@RequestBody Realm realm) throws JsonProcessingException {
 
-        log.info("Creating realm with title " + realmDto.get("title"));
+        log.info("Creating realm with title " + realm.getTitle());
 
-        realmDto.put("id", UUID.randomUUID().toString());
+        realm.setId(UUID.randomUUID().toString());
 
         Event event = new Event();
         event.setEventType(EventType.CREATE);
-        event.setPayload(realmDto);
+        event.setPayload(mapper.writeValueAsString(realm));
 
         eventBusService.publishEvent(event);
 

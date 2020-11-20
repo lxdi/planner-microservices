@@ -1,7 +1,11 @@
 package com.sogoodlabs.planner.means.service.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
+import com.sogoodlabs.planner.data.model.Layer;
+import com.sogoodlabs.planner.data.model.Mean;
 import com.sogoodlabs.planner.means.service.client.DataAccessClient;
 import com.sogoodlabs.planner.means.service.service.EventBusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +19,13 @@ public class MainController {
 
     private static Logger log = Logger.getLogger(MainController.class.getName());
 
-    private static final String REALM_ID = "realmid";
-    private static final String MEAN_ID = "meanid";
-
     @Autowired
     private DataAccessClient dataAccessClient;
 
     @Autowired
     private EventBusService eventBusService;
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @GetMapping
     public String heartbeat(){
@@ -36,23 +39,23 @@ public class MainController {
     }
 
     @PostMapping("/means/create")
-    public void createRealm(@RequestBody HashMap<String, Object> meanDto){
+    public void createMean(@RequestBody Mean mean) throws JsonProcessingException {
 
-        checkRealm((String) meanDto.get(REALM_ID));
+        checkRealm(mean.getRealmid());
 
-        log.info("Creating mean with title " + meanDto.get("title"));
+        log.info("Creating mean with title " + mean.getTitle());
 
         String meanId = UUID.randomUUID().toString();
-        meanDto.put("id", meanId);
+        mean.setId(meanId);
 
         Event event = new Event();
         event.setEventType(EventType.CREATE);
-        event.setPayload(meanDto);
+        event.setPayload(mapper.writeValueAsString(mean));
 
         eventBusService.publishMeanEvent(event);
 
-        if(meanDto.get("layers")!=null){
-            createLayers((List<HashMap<String, Object>>) meanDto.get("layers"), meanId);
+        if(mean.getLayers()!=null && !mean.getLayers().isEmpty()){
+            createLayers(mean.getLayers(), meanId);
         }
 
     }
@@ -67,21 +70,20 @@ public class MainController {
         }
     }
 
-    private void createLayers(List<HashMap<String, Object>> layersArrList, String meanId){
+    private void createLayers(List<Layer> layersList, String meanId) throws JsonProcessingException {
 
         log.info("Creating layers for mean: " + meanId);
 
-        for(HashMap<String, Object> layerDto : layersArrList){
-            layerDto.put("id", UUID.randomUUID().toString());
-            layerDto.put(MEAN_ID, meanId);
+        for(Layer layer : layersList){
+            layer.setId(UUID.randomUUID().toString());
+            layer.setMeanid(meanId);
 
             Event event = new Event();
             event.setEventType(EventType.CREATE);
-            event.setPayload(layerDto);
+            event.setPayload(mapper.writeValueAsString(layer));
 
             eventBusService.publishLayerEvent(event);
         }
-
 
     }
 

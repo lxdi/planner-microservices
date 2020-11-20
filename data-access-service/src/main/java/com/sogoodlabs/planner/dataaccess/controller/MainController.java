@@ -1,6 +1,9 @@
 package com.sogoodlabs.planner.dataaccess.controller;
 
-import com.sogoodlabs.common_mapper.CommonMapper;
+import com.sogoodlabs.planner.data.model.Layer;
+import com.sogoodlabs.planner.data.model.Mean;
+import com.sogoodlabs.planner.data.model.Realm;
+import com.sogoodlabs.planner.data.model.Target;
 import com.sogoodlabs.planner.dataaccess.data.LayersRepository;
 import com.sogoodlabs.planner.dataaccess.data.MeansRepository;
 import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
@@ -29,68 +32,56 @@ public class MainController {
     @Autowired
     private LayersRepository layersRepository;
 
-    @Autowired
-    private CommonMapper commonMapper;
-
     @GetMapping("/realms/get/all")
-    public List<Map<String, Object>> getRealms(){
-        List<Map<String, Object>> result = new ArrayList<>();
-        realmsRepository.findAll().forEach(realm -> {
-            result.add(commonMapper.mapToDto(realm));
-        });
+    public List<Realm> getRealms(){
+        List<Realm> result = new ArrayList<>();
+        realmsRepository.findAll().iterator().forEachRemaining(result::add);
         return result;
     }
 
     @GetMapping("/realms/get")
-    public Map<String, Object> getRealmById(@RequestParam("id") String id){
-        return commonMapper.mapToDto(realmsRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException("Realm not found by id: " + id)));
+    public Realm getRealmById(@RequestParam("id") String id){
+        return realmsRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Realm not found by id: " + id));
     }
 
     @GetMapping("/targets/get/all")
-    public List<Map<String, Object>> getTargetsAll(){
-        List<Map<String, Object>> result = new ArrayList<>();
-        targetsRepository.findAll().forEach(realm -> {
-            result.add(commonMapper.mapToDto(realm));
-        });
+    public List<Target> getTargetsAll(){
+        List<Target> result = new ArrayList<>();
+        targetsRepository.findAll().iterator().forEachRemaining(result::add);
         return result;
     }
 
     @GetMapping("/targets/get")
-    public Map<String, Object> getTargetById(@RequestParam("id") String id){
-        return commonMapper.mapToDto(targetsRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException("Target not found by id: " + id)));
+    public Target getTargetById(@RequestParam("id") String id){
+        return targetsRepository.findById(id).orElseThrow(() -> new NullPointerException("Target not found by id: " + id));
     }
 
 
     @GetMapping("/means/get/all")
-    public List<Map<String, Object>> getMeansAll(){
-        List<Map<String, Object>> result = new ArrayList<>();
-        meansRepository.findAll().forEach(realm -> {
-            result.add(commonMapper.mapToDto(realm));
-        });
+    public List<Mean> getMeansAll(){
+        List<Mean> result = new ArrayList<>();
+        meansRepository.findAll().iterator().forEachRemaining(result::add);
         return result;
     }
 
     @GetMapping("/means/get")
-    public Map<String, Object> getMeansById(@RequestParam("id") String id){
-        return commonMapper.mapToDto(meansRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id)));
+    public Mean getMeansById(@RequestParam("id") String id){
+        return meansRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id));
     }
 
     @GetMapping("/layers/get/all")
-    public List<Map<String, Object>> getLayersAll(){
-        List<Map<String, Object>> result = new ArrayList<>();
-        layersRepository.findAll().forEach(realm -> {
-            result.add(commonMapper.mapToDto(realm));
-        });
+    public List<Layer> getLayersAll(){
+        List<Layer> result = new ArrayList<>();
+        layersRepository.findAll().iterator().forEachRemaining(result::add);
         return result;
     }
 
     @GetMapping("/layers/get")
-    public Map<String, Object> getLayerById(@RequestParam("id") String id){
-        return commonMapper.mapToDto(layersRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id)));
+    public Layer getLayerById(@RequestParam("id") String id){
+        return layersRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id));
     }
 
 }

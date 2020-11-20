@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Event {
     private EventType eventType;
-    private Serializable payload;
+    private String payload;
 
     public EventType getEventType() {
         return eventType;
@@ -14,11 +14,11 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public Serializable getPayload() {
+    public String getPayload() {
         return payload;
     }
 
-    public void setPayload(Serializable payload) {
+    public void setPayload(String payload) {
         this.payload = payload;
     }
 }

@@ -2,18 +2,16 @@ package com.sogoodlabs.planner.data.model;
 
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 @Entity
-public class Target {
+public class Target implements Serializable {
 
     @Id
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Realm realm;
+    private String realmid;
 
     private String title;
 
@@ -24,17 +22,17 @@ public class Target {
         this.id = id;
     }
 
-    public Realm getRealm() {
-        return realm;
-    }
-    public void setRealm(Realm realm) {
-        this.realm = realm;
-    }
-
     public String getTitle() {
         return title;
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getRealmid() {
+        return realmid;
+    }
+    public void setRealmid(String realmid) {
+        this.realmid = realmid;
     }
 }

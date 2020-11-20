@@ -1,7 +1,5 @@
 package com.sogoodlabs.planner.dataaccess;
 
-import com.sogoodlabs.common_mapper.CommonMapper;
-import com.sogoodlabs.common_mapper.IEntityById;
 import com.sogoodlabs.planner.dataaccess.config.MessageStreams;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

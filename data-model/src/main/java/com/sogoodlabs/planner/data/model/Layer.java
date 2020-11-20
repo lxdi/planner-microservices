@@ -1,25 +1,25 @@
 package com.sogoodlabs.planner.data.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-public class Layer {
+public class Layer implements Serializable {
 
     @Id
     private String id;
 
     private Integer num;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Mean mean;
+    private String meanid;
+
+    @Transient
+    private List<Task> tasks;
 
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -27,16 +27,21 @@ public class Layer {
     public Integer getNum() {
         return num;
     }
-
     public void setNum(Integer num) {
         this.num = num;
     }
 
-    public Mean getMean() {
-        return mean;
+    public String getMeanid() {
+        return meanid;
+    }
+    public void setMeanid(String meanid) {
+        this.meanid = meanid;
     }
 
-    public void setMean(Mean mean) {
-        this.mean = mean;
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

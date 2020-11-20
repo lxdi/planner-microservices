@@ -5,18 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 @Entity
-public class Task {
+public class Task implements Serializable {
 
     @Id
     private String id;
 
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Layer layer;
-
+    private String layerid;
 
     public String getId() {
         return id;
@@ -33,11 +32,11 @@ public class Task {
         this.title = title;
     }
 
-    public Layer getLayer() {
-        return layer;
+    public String getLayerid() {
+        return layerid;
     }
 
-    public void setLayer(Layer layer) {
-        this.layer = layer;
+    public void setLayerid(String layerid) {
+        this.layerid = layerid;
     }
 }

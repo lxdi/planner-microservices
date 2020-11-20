@@ -1,7 +1,10 @@
 package com.sogoodlabs.planner.targets.service.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
+import com.sogoodlabs.planner.data.model.Target;
 import com.sogoodlabs.planner.targets.service.client.DataAccessClient;
 import com.sogoodlabs.planner.targets.service.service.EventBusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,8 @@ public class MainController {
     @Autowired
     private EventBusService eventBusService;
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     @GetMapping
     public String heartbeat(){
         return "heartbeat";
@@ -33,9 +38,9 @@ public class MainController {
     }
 
     @PostMapping("/targets/create")
-    public void createRealm(@RequestBody HashMap<String, Object> targetDto){
+    public void createTarget(@RequestBody Target target) throws JsonProcessingException {
 
-        String realmId = (String) targetDto.get("realmid");
+        String realmId = target.getRealmid();
 
         if(realmId==null){
             throw new RuntimeException("Target should have a realm");
@@ -45,20 +50,20 @@ public class MainController {
             throw new RuntimeException("Error while creating target - realm with id "+ realmId + " doesn't exist");
         }
 
-        log.info("Creating target with title " + targetDto.get("title"));
+        log.info("Creating target with title " + target.getTitle());
 
-        targetDto.put("id", UUID.randomUUID().toString());
+        target.setId(UUID.randomUUID().toString());
 
         Event event = new Event();
         event.setEventType(EventType.CREATE);
-        event.setPayload(targetDto);
+        event.setPayload(mapper.writeValueAsString(target));
 
         eventBusService.publishEvent(event);
 
     }
 
     @DeleteMapping("/targets/delete")
-    public void deleteRealm(@RequestParam String id){
+    public void deleteTarget(@RequestParam String id){
 
         log.info("Deleting realm with id " + id);
 
