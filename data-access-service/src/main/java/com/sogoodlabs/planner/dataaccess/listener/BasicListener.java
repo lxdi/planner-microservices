@@ -3,17 +3,18 @@ package com.sogoodlabs.planner.dataaccess.listener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.dataaccess.service.BasicEventHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.util.logging.Logger;
 
 @Service
 public class BasicListener {
 
-    private static final Logger log = Logger.getLogger(BasicListener.class.getName());
+    private static Logger log = LoggerFactory.getLogger(BasicListener.class.getName());
 
     @Autowired
     private BasicEventHandler basicEventHandler;

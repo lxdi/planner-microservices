@@ -7,16 +7,17 @@ import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.data.model.Target;
 import com.sogoodlabs.planner.targets.service.client.DataAccessClient;
 import com.sogoodlabs.planner.targets.service.service.EventBusService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 @RestController
 public class MainController {
 
-    private static Logger log = Logger.getLogger(MainController.class.getName());
+    private static Logger log = LoggerFactory.getLogger(MainController.class.getName());
 
     @Autowired
     private DataAccessClient dataAccessClient;

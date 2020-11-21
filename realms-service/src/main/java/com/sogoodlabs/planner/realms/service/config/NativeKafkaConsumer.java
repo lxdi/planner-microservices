@@ -1,13 +1,13 @@
 package com.sogoodlabs.planner.realms.service.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.logging.Logger;
 
 @Component
 public class NativeKafkaConsumer {
 
-    private static final Logger LOG = Logger.getLogger(NativeKafkaConsumer.class.getName());
+    private static Logger log = LoggerFactory.getLogger(NativeKafkaConsumer.class.getName());
 
 //    @PostConstruct
 //    public void init(){

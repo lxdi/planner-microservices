@@ -7,15 +7,15 @@ import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.data.model.*;
 import com.sogoodlabs.planner.dataaccess.data.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.logging.Logger;
 
 @Service
 public class BasicEventHandler {
 
-    private static final Logger log = Logger.getLogger(BasicEventHandler.class.getName());
+    private static Logger log = LoggerFactory.getLogger(BasicEventHandler.class.getName());
 
     @Autowired
     private RealmsRepository realmsRepository;

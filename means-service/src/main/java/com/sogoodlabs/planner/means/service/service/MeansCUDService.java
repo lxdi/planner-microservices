@@ -8,18 +8,19 @@ import com.sogoodlabs.planner.data.model.IMapper;
 import com.sogoodlabs.planner.data.model.Layer;
 import com.sogoodlabs.planner.data.model.Mean;
 import com.sogoodlabs.planner.means.service.client.DataAccessClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 public class MeansCUDService {
 
-    private static Logger log = Logger.getLogger(MeansCUDService.class.getName());
+    private static Logger log = LoggerFactory.getLogger(MeansCUDService.class.getName());
 
     @Autowired
     private DataAccessClient dataAccessClient;

@@ -5,15 +5,16 @@ import com.sogoodlabs.planner.data.model.Mean;
 import com.sogoodlabs.planner.data.model.MeanTargetRelation;
 import com.sogoodlabs.planner.means.service.service.MeanTargetAssignService;
 import com.sogoodlabs.planner.means.service.service.MeansCUDService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.logging.Logger;
 
 @RestController
 public class MainController {
 
-    private static Logger log = Logger.getLogger(MainController.class.getName());
+    private static Logger log = LoggerFactory.getLogger(MainController.class.getName());
 
     @Autowired
     private MeansCUDService meansCUDService;

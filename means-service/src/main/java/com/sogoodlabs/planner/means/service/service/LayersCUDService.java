@@ -4,16 +4,17 @@ import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.data.model.IMapper;
 import com.sogoodlabs.planner.data.model.Layer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 public class LayersCUDService {
 
-    private static Logger log = Logger.getLogger(LayersCUDService.class.getName());
+    private static Logger log = LoggerFactory.getLogger(LayersCUDService.class.getName());
 
     @Autowired
     private TasksCUDService tasksCUDService;
@@ -26,7 +27,7 @@ public class LayersCUDService {
 
     public void createLayer(Layer layer, String meanId) {
 
-        log.info("Creating layer " + layer.getNum() + " for mean " + meanId);
+        log.info("Creating layer {}, for mean {}", layer.getNum(), meanId);
 
         layer.setId(UUID.randomUUID().toString());
         layer.setMeanid(meanId);

@@ -3,6 +3,8 @@ package com.sogoodlabs.planner.controllers;
 import com.sogoodlabs.planner.streams.ChannelsService;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.integration.support.MessageBuilder;
@@ -12,14 +14,12 @@ import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping(path = "/events")
 public class EventsController {
 
-    private static final Logger LOG = Logger.getLogger(EventsController.class.getName());
+    private static Logger log = LoggerFactory.getLogger(EventsController.class.getName());
 
     @Autowired
     ChannelsService realmsStreamConnector;
@@ -40,10 +40,10 @@ public class EventsController {
                 new ProducerRecord<>("Realms", "General Events", event);
 
         try {
-            LOG.info("Sending event - " + event);
+            log.info("Sending event - " + event);
             producer.send(record);
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "Error while producing event", e);
+            log.error("Error while producing event", e);
         }
         return "Success";
     }
@@ -52,7 +52,7 @@ public class EventsController {
     @ResponseStatus(HttpStatus.OK)
     public void greetings(@RequestBody String event) {
 
-        LOG.info("Sending event (steams) - " + event);
+        log.info("Sending event (steams) - " + event);
 
         MessageChannel messageChannel = realmsStreamConnector.realmsIn();
         messageChannel.send(MessageBuilder
