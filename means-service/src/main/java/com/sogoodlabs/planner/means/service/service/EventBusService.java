@@ -30,6 +30,11 @@ public class EventBusService {
         doPublish(messageChannel, event);
     }
 
+    public void publishTargetMeanRelationEvent(Event event){
+        MessageChannel messageChannel = streams.targetMeanRelationEvents();
+        doPublish(messageChannel, event);
+    }
+
     private void doPublish(MessageChannel messageChannel, Event event){
         messageChannel.send(MessageBuilder
                 .withPayload(event)

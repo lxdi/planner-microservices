@@ -7,11 +7,9 @@ import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
 import com.sogoodlabs.planner.data.model.*;
 import com.sogoodlabs.planner.dataaccess.data.*;
-import com.sogoodlabs.planner.dataaccess.listener.BasicListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
 @Service
@@ -33,6 +31,9 @@ public class BasicEventHandler {
 
     @Autowired
     private TasksRepository tasksRepository;
+
+    @Autowired
+    private MeanTargetRelationRepository meanTargetRelationRepository;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -115,6 +116,23 @@ public class BasicEventHandler {
         if(event.getEventType() == EventType.DELETE){
             log.info("Deleting task by id: " + event.getPayload());
             tasksRepository.deleteById(event.getPayload());
+            return;
+        }
+
+        log.info("Unknown type of event; skipping");
+    }
+
+    public void handleTargetMeanRelationsEvent(Event event) throws JsonProcessingException {
+        if(event.getEventType() == EventType.CREATE){
+            MeanTargetRelation meanTargetRelation = mapper.readValue(event.getPayload(), MeanTargetRelation.class);
+            log.info("Creating target-mean relation: target " + meanTargetRelation.getTargetid() + ", mean : " + meanTargetRelation.getMeanid());
+            meanTargetRelationRepository.save(meanTargetRelation);
+            return;
+        }
+
+        if(event.getEventType() == EventType.DELETE){
+            log.info("Deleting target-mean relation by id: " + event.getPayload());
+            meanTargetRelationRepository.deleteById(event.getPayload());
             return;
         }
 

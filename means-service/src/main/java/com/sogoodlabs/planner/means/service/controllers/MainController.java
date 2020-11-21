@@ -2,6 +2,8 @@ package com.sogoodlabs.planner.means.service.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sogoodlabs.planner.data.model.Mean;
+import com.sogoodlabs.planner.data.model.MeanTargetRelation;
+import com.sogoodlabs.planner.means.service.service.MeanTargetAssignService;
 import com.sogoodlabs.planner.means.service.service.MeansCUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ public class MainController {
 
     @Autowired
     private MeansCUDService meansCUDService;
+
+    @Autowired
+    private MeanTargetAssignService meanTargetAssignService;
 
     @GetMapping
     public String heartbeat(){
@@ -37,5 +42,11 @@ public class MainController {
         meansCUDService.deleteMean(id);
     }
 
+    @PostMapping("/means/target/relation/create")
+    public void createTargetMeanRelation(@RequestBody MeanTargetRelation meanTargetRelation){
+        meanTargetAssignService.assignToTarget(meanTargetRelation);
+    }
+
+    
 
 }

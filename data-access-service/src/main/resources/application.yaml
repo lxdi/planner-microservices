@@ -34,6 +34,9 @@ spring.cloud.stream.bindings.layers-events.contentType: application/json
 spring.cloud.stream.bindings.tasks-events.destination: tasks-events
 spring.cloud.stream.bindings.tasks-events.contentType: application/json
 
+spring.cloud.stream.bindings.mean-target-relations-events.destination: mean-target-relations-events
+spring.cloud.stream.bindings.mean-target-relations-events.contentType: application/json
+
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
 

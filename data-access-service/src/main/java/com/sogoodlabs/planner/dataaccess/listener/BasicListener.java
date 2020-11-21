@@ -43,4 +43,9 @@ public class BasicListener {
         basicEventHandler.handleTasksEvent(event);
     }
 
+    @StreamListener("mean-target-relations-events")
+    public void targetMeanRelationIn(@Payload Event event) throws Exception {
+        basicEventHandler.handleTargetMeanRelationsEvent(event);
+    }
+
 }

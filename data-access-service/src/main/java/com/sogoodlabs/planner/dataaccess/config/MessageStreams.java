@@ -22,4 +22,7 @@ public interface MessageStreams {
     @Input("tasks-events")
     MessageChannel tasksEvents();
 
+    @Input("mean-target-relations-events")
+    MessageChannel targetMeanRelationsEvents();
+
 }

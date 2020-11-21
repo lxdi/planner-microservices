@@ -16,4 +16,7 @@ public interface BasicMessagesStreams {
     @Output("tasks-events")
     MessageChannel tasksEvents();
 
+    @Output("mean-target-relations-events")
+    MessageChannel targetMeanRelationEvents();
+
 }

@@ -29,6 +29,9 @@ public class MainController {
     @Autowired
     private TasksRepository tasksRepository;
 
+    @Autowired
+    private MeanTargetRelationRepository meanTargetRelationRepository;
+
     @GetMapping("/realms/get/all")
     public List<Realm> getRealms(){
         List<Realm> result = new ArrayList<>();
@@ -66,6 +69,13 @@ public class MainController {
     public Mean getMeansById(@RequestParam("id") String id){
         return meansRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id));
+    }
+
+    @GetMapping("/means/get/target/relations")
+    public List<MeanTargetRelation> getMeanTargetRelationById(@RequestParam("id") String meanid){
+        List<MeanTargetRelation> result = new ArrayList<>();
+        meanTargetRelationRepository.findByMeanid(meanid).iterator().forEachRemaining(result::add);
+        return result;
     }
 
     @GetMapping("/layers/get/all")
