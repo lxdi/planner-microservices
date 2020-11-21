@@ -15,8 +15,8 @@ public class EventBusService {
     @Autowired
     private BasicMessagesStreams streams;
 
-    public void publishEvent(Event event){
-        MessageChannel messageChannel = streams.realmsEvents();
+    public void publishTargetsEvent(Event event){
+        MessageChannel messageChannel = streams.targetsEvents();
         messageChannel.send(MessageBuilder
                 .withPayload(event)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

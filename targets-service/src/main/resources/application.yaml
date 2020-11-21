@@ -16,6 +16,9 @@ spring.cloud.stream.kafka.binder.brokers: kafka:9092
 spring.cloud.stream.bindings.targets-events.destination: targets-events
 spring.cloud.stream.bindings.targets-events.contentType: application/json
 
+spring.cloud.stream.bindings.realms-events.destination: realms-events
+spring.cloud.stream.bindings.realms-events.contentType: application/json
+
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
 

@@ -7,6 +7,9 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface BasicMessagesStreams {
 
+    @Input("realms-events")
+    MessageChannel realmsEvents();
+
     @Output("means-events")
     MessageChannel meansEvents();
 

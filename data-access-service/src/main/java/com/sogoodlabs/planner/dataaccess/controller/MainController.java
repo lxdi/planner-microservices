@@ -57,6 +57,11 @@ public class MainController {
         return targetsRepository.findById(id).orElseThrow(() -> new NullPointerException("Target not found by id: " + id));
     }
 
+    @GetMapping("/targets/get/by/realm")
+    public List<Target> getTargetsByRealm(@RequestParam("id") String realmid){
+        return targetsRepository.findByRealmid(realmid);
+    }
+
 
     @GetMapping("/means/get/all")
     public List<Mean> getMeansAll(){
@@ -78,6 +83,11 @@ public class MainController {
         return result;
     }
 
+    @GetMapping("/means/get/by/realm")
+    public List<Mean> getMeansByRealmId(@RequestParam("id") String realmid){
+        return meansRepository.findByRealmid(realmid);
+    }
+
     @GetMapping("/layers/get/all")
     public List<Layer> getLayersAll(){
         List<Layer> result = new ArrayList<>();
@@ -91,6 +101,11 @@ public class MainController {
                 .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id));
     }
 
+    @GetMapping("/layers/get/by/mean")
+    public List<Layer> getMeansByMeanId(@RequestParam("id") String meanid){
+        return layersRepository.findByMeanid(meanid);
+    }
+
     @GetMapping("/tasks/get/all")
     public List<Task> getTasksAll(){
         List<Task> result = new ArrayList<>();
@@ -102,6 +117,11 @@ public class MainController {
     public Task getTaskById(@RequestParam("id") String id){
         return tasksRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException("Task not found by id: " + id));
+    }
+
+    @GetMapping("/tasks/get/by/layer")
+    public List<Task> getTaskByMeanId(@RequestParam("id") String layerid){
+        return tasksRepository.findByLayerid(layerid);
     }
 
 }
