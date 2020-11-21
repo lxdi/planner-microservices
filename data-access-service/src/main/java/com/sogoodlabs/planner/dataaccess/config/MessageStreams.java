@@ -19,4 +19,7 @@ public interface MessageStreams {
     @Input("layers-events")
     MessageChannel layersEvents();
 
+    @Input("tasks-events")
+    MessageChannel tasksEvents();
+
 }

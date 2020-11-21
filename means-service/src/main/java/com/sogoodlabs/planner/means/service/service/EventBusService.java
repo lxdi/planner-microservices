@@ -25,6 +25,11 @@ public class EventBusService {
         doPublish(messageChannel, event);
     }
 
+    public void publishTaskEvent(Event event){
+        MessageChannel messageChannel = streams.tasksEvents();
+        doPublish(messageChannel, event);
+    }
+
     private void doPublish(MessageChannel messageChannel, Event event){
         messageChannel.send(MessageBuilder
                 .withPayload(event)

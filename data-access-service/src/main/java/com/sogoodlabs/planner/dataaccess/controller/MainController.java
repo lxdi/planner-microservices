@@ -1,13 +1,7 @@
 package com.sogoodlabs.planner.dataaccess.controller;
 
-import com.sogoodlabs.planner.data.model.Layer;
-import com.sogoodlabs.planner.data.model.Mean;
-import com.sogoodlabs.planner.data.model.Realm;
-import com.sogoodlabs.planner.data.model.Target;
-import com.sogoodlabs.planner.dataaccess.data.LayersRepository;
-import com.sogoodlabs.planner.dataaccess.data.MeansRepository;
-import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
-import com.sogoodlabs.planner.dataaccess.data.TargetsRepository;
+import com.sogoodlabs.planner.data.model.*;
+import com.sogoodlabs.planner.dataaccess.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +25,9 @@ public class MainController {
 
     @Autowired
     private LayersRepository layersRepository;
+
+    @Autowired
+    private TasksRepository tasksRepository;
 
     @GetMapping("/realms/get/all")
     public List<Realm> getRealms(){
@@ -82,6 +79,19 @@ public class MainController {
     public Layer getLayerById(@RequestParam("id") String id){
         return layersRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException("Layer not found by id: " + id));
+    }
+
+    @GetMapping("/tasks/get/all")
+    public List<Task> getTasksAll(){
+        List<Task> result = new ArrayList<>();
+        tasksRepository.findAll().iterator().forEachRemaining(result::add);
+        return result;
+    }
+
+    @GetMapping("/tasks/get")
+    public Task getTaskById(@RequestParam("id") String id){
+        return tasksRepository.findById(id)
+                .orElseThrow(() -> new NullPointerException("Task not found by id: " + id));
     }
 
 }

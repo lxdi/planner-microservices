@@ -38,4 +38,9 @@ public class BasicListener {
         basicEventHandler.handleLayersEvent(event);
     }
 
+    @StreamListener("tasks-events")
+    public void tasksIn(@Payload Event event) throws Exception {
+        basicEventHandler.handleTasksEvent(event);
+    }
+
 }

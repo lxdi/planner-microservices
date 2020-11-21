@@ -33,6 +33,10 @@ zuul:
             path: /means/get/**
             url: http://data-access:8080
             stripPrefix: false
+        tasks/get:
+            path: /tasks/get/**
+            url: http://data-access:8080
+            stripPrefix: false
         layers/get:
             path: /layers/get/**
             url: http://data-access:8080

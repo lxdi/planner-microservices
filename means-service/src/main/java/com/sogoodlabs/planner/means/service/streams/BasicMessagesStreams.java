@@ -13,4 +13,7 @@ public interface BasicMessagesStreams {
     @Output("layers-events")
     MessageChannel layersEvents();
 
+    @Output("tasks-events")
+    MessageChannel tasksEvents();
+
 }

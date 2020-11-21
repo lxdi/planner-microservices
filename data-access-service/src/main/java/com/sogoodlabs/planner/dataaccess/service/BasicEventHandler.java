@@ -5,14 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sogoodlabs.planner.data.common.events.Event;
 import com.sogoodlabs.planner.data.common.events.EventType;
-import com.sogoodlabs.planner.data.model.Layer;
-import com.sogoodlabs.planner.data.model.Mean;
-import com.sogoodlabs.planner.data.model.Realm;
-import com.sogoodlabs.planner.data.model.Target;
-import com.sogoodlabs.planner.dataaccess.data.LayersRepository;
-import com.sogoodlabs.planner.dataaccess.data.MeansRepository;
-import com.sogoodlabs.planner.dataaccess.data.RealmsRepository;
-import com.sogoodlabs.planner.dataaccess.data.TargetsRepository;
+import com.sogoodlabs.planner.data.model.*;
+import com.sogoodlabs.planner.dataaccess.data.*;
 import com.sogoodlabs.planner.dataaccess.listener.BasicListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +30,9 @@ public class BasicEventHandler {
 
     @Autowired
     private LayersRepository layersRepository;
+
+    @Autowired
+    private TasksRepository tasksRepository;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -101,6 +98,23 @@ public class BasicEventHandler {
         if(event.getEventType() == EventType.DELETE){
             log.info("Deleting layer by id: " + event.getPayload());
             layersRepository.deleteById((String) event.getPayload());
+            return;
+        }
+
+        log.info("Unknown type of event; skipping");
+    }
+
+    public void handleTasksEvent(Event event) throws JsonProcessingException {
+        if(event.getEventType() == EventType.CREATE){
+            Task task = mapper.readValue(event.getPayload(), Task.class);
+            log.info("Creating task: " + task.getTitle() + ", id: " + task.getId());
+            tasksRepository.save(task);
+            return;
+        }
+
+        if(event.getEventType() == EventType.DELETE){
+            log.info("Deleting task by id: " + event.getPayload());
+            tasksRepository.deleteById(event.getPayload());
             return;
         }
 
