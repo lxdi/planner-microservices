@@ -11,6 +11,6 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.hibernate', name: 'hibernate-annotations', version: "${hibernateVersion}"
+	implementation group: 'org.hibernate', name: 'hibernate-annotations', version: "${hibernateVersion}"
 }
 

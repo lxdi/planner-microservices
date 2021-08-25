@@ -26,8 +26,8 @@ dependencies {
 	//feign
 	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudVersion"
 
-	compile project(':data-common')
-	compile project(':data-model')
+	implementation project(':data-common')
+	implementation project(':data-model')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
