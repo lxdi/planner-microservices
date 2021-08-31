@@ -11,7 +11,8 @@ services:
       POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
     volumes:
-      - /home/alex/installs/planner2/postgres-data:/data/postgres
+      - ${postgresDataPath}:/data/postgres
+      - ${initScriptsPath}:/docker-entrypoint-initdb.d/
 
   #-----------------kafka--------------------
   zookeeper:
@@ -19,17 +20,17 @@ services:
     ports:
       - "2181:2181"
     volumes:
-      - /home/alex/installs/planner2/kafka:/kafka
+      - ${kafkaPath}:/kafka
 
   kafka:
     image: wurstmeister/kafka
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.36
+      KAFKA_ADVERTISED_HOST_NAME: ${hostip}
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
-      - /home/alex/installs/planner2/kafka:/kafka
+      - ${kafkaPath}:/kafka
   #            - /var/run/docker.sock:/var/run/docker.sock
 
 
@@ -54,9 +55,9 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:7.0.0
     volumes:
-      - /home/alex/Projects/planner-microservices/config:/home/alex/Projects/planner-microservices/config
-      - /home/alex/installs/planner2/logback:/home/alex/installs/planner2/logback
-    command: logstash -f /home/alex/Projects/planner-microservices/config/logstash.conf
+      - ${logstashConfigPath}:/config
+      - ${logsPath}:/home/alex/installs/planner2/logback
+    command: logstash -f /config/logstash.conf
     depends_on:
       - elasticsearch
 

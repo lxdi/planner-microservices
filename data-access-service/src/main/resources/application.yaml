@@ -2,7 +2,7 @@
 spring:
     application.name: planner-data-access
     datasource:
-      url: jdbc:postgresql://postgres:5432/planner-data-access
+      url: jdbc:postgresql://postgres:5432/planner_data_access
       username: postgres
       password: postgres
     jpa.hibernate.ddl-auto: update
