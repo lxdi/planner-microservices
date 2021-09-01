@@ -6,7 +6,7 @@ services:
             - "8090:8080"
         #        network_mode: host
         volumes:
-            - /home/alex/installs/planner2/logback:/workspace/logs
+            - ${logsPath}:/workspace/logs
 #        depends_on:
 #            - kafka
 
@@ -15,7 +15,7 @@ services:
 #        ports:
 #            - "8091:8080"
         volumes:
-            - /home/alex/installs/planner2/logback:/workspace/logs
+            - ${logsPath}:/workspace/logs
 #        depends_on:
 #            - postgres
 #            - kafka
@@ -27,21 +27,21 @@ services:
 #        ports:
 #            - "8091:8080"
         volumes:
-            - /home/alex/installs/planner2/logback:/workspace/logs
+            - ${logsPath}:/workspace/logs
 
     means-service:
         image: planner2/means-service:0.0.1
         #        ports:
         #            - "8091:8080"
         volumes:
-            - /home/alex/installs/planner2/logback:/workspace/logs
+            - ${logsPath}:/workspace/logs
 
     data-access:
         image: planner2/data-access-service:0.0.1
         ports:
             - "8092:8080"
         volumes:
-            - /home/alex/installs/planner2/logback:/workspace/logs
+            - ${logsPath}:/workspace/logs
 #        depends_on:
 #            - postgres
 #            - kafka
