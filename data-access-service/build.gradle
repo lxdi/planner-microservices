@@ -28,6 +28,8 @@ dependencies {
 
 	implementation "org.postgresql:postgresql:9.4.1212"
 
+	implementation 'net.logstash.logback:logstash-logback-encoder:4.11'
+
 //	compile project(':data-model')
 
 	implementation project(':data-common')
@@ -49,6 +51,13 @@ test {
 //bootJar {
 //	launchScript()
 //}
+
+task copyLogstashConf(type: Copy) {
+	from '../config/logback.xml'
+	into 'build/resources/main'
+}
+
+processResources.dependsOn copyLogstashConf
 
 bootBuildImage {
 	imageName = "planner2/$project.name:$version"

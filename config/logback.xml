@@ -1,0 +1,26 @@
+<configuration>
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>logstash:5000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty name="file-path" source="logging.file.name"/>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${file-path}</file>
+
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+
+        <append>true</append>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="logstash" />
+        <appender-ref ref="fileAppender" />
+    </root>
+
+</configuration>

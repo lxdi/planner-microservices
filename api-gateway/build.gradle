@@ -34,6 +34,8 @@ dependencies {
 
 	implementation "org.springframework.cloud:spring-cloud-starter-netflix-zuul:$zuulVersion"
 
+	implementation 'net.logstash.logback:logstash-logback-encoder:4.11'
+
 	implementation project(':data-common')
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -44,6 +46,13 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task copyLogstashConf(type: Copy) {
+	from '../config/logback.xml'
+	into 'build/resources/main'
+}
+
+processResources.dependsOn copyLogstashConf
 
 //bootJar {
 //	launchScript()
