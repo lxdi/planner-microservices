@@ -15,6 +15,11 @@ spec:
       containers:
       - name: hw
         image: planner2/helloworld:0.0.1
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /version
+            port: 8080
 
 ---
 apiVersion: v1
