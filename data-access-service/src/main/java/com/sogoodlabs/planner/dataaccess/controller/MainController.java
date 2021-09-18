@@ -32,6 +32,11 @@ public class MainController {
     @Autowired
     private MeanTargetRelationRepository meanTargetRelationRepository;
 
+    @GetMapping("/version")
+    public String version(){
+        return "0.0.1";
+    }
+
     @GetMapping("/realms/get/all")
     public List<Realm> getRealms(){
         List<Realm> result = new ArrayList<>();

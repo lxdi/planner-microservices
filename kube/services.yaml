@@ -1,0 +1,188 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: ag
+          image: planner2/api-gateway:0.0.1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /version
+              port: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30130
+  selector:
+    app: api-gateway
+
+### DATA-ACCESS ###
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-access
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-access
+  template:
+    metadata:
+      labels:
+        app: data-access
+    spec:
+      containers:
+        - name: da
+          image: planner2/data-access-service:0.0.1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /version
+              port: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-access
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: data-access
+
+### REALMS ###
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realms-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realms-service
+  template:
+    metadata:
+      labels:
+        app: realms-service
+    spec:
+      containers:
+        - name: rs
+          image: planner2/realms-service:0.0.1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /version
+              port: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: realms-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: realms-service
+
+### TARGETS ###
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: targets-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: targets-service
+  template:
+    metadata:
+      labels:
+        app: targets-service
+    spec:
+      containers:
+        - name: ts
+          image: planner2/targets-service:0.0.1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /version
+              port: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: targets-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: targets-service
+
+### MEANS ###
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: means-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: means-service
+  template:
+    metadata:
+      labels:
+        app: means-service
+    spec:
+      containers:
+        - name: ms
+          image: planner2/means-service:0.0.1
+          readinessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /version
+              port: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: means-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: means-service

@@ -29,7 +29,6 @@ public class MainController {
 
     @GetMapping("/version")
     public String version(){
-        log.info("Getting version ");
         return "0.0.1";
     }
 
