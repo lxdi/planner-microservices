@@ -2,6 +2,7 @@ package com.sogoodlabs.planner.data.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Layer implements Serializable {
     private String meanid;
 
     @Transient
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     public String getId() {
         return id;

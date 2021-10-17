@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ag
-          image: planner2/api-gateway:0.0.1
+          image: planner2/api-gateway:1.0.1
           readinessProbe:
             httpGet:
               scheme: HTTP
@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
         - name: da
-          image: planner2/data-access-service:0.0.1
+          image: planner2/data-access-service:1.0.1
           readinessProbe:
             httpGet:
               scheme: HTTP
@@ -91,11 +91,11 @@ spec:
     spec:
       containers:
         - name: rs
-          image: planner2/realms-service:0.0.1
+          image: planner2/realms-service:1.0.1
           readinessProbe:
             httpGet:
               scheme: HTTP
-              path: /version
+              path: /realms/version
               port: 8080
 
 ---
@@ -129,7 +129,7 @@ spec:
     spec:
       containers:
         - name: ts
-          image: planner2/targets-service:0.0.1
+          image: planner2/targets-service:1.0.1
           readinessProbe:
             httpGet:
               scheme: HTTP
@@ -167,7 +167,7 @@ spec:
     spec:
       containers:
         - name: ms
-          image: planner2/means-service:0.0.1
+          image: planner2/means-service:1.0.1
           readinessProbe:
             httpGet:
               scheme: HTTP

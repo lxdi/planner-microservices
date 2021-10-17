@@ -34,16 +34,6 @@ public class BasicListener {
         basicEventHandler.handleMeansEvent(event);
     }
 
-    @StreamListener("layers-events")
-    public void layersIn(@Payload Event event) throws Exception {
-        basicEventHandler.handleLayersEvent(event);
-    }
-
-    @StreamListener("tasks-events")
-    public void tasksIn(@Payload Event event) throws Exception {
-        basicEventHandler.handleTasksEvent(event);
-    }
-
     @StreamListener("mean-target-relations-events")
     public void targetMeanRelationIn(@Payload Event event) throws Exception {
         basicEventHandler.handleTargetMeanRelationsEvent(event);

@@ -13,6 +13,8 @@ repositories {
 }
 
 dependencies {
+	implementation project(':event-bus-common')
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation "org.springframework.cloud:spring-cloud-starter-sleuth:$springCloudVersion"
 	implementation "org.springframework.cloud:spring-cloud-starter-zipkin:$springCloudVersion"

@@ -75,6 +75,18 @@ public class BasicEventHandler {
         if(event.getEventType() == EventType.CREATE){
             Mean mean = mapper.readValue(event.getPayload(), Mean.class);
             log.info("Creating mean: " + mean.getTitle() + ", id: " + mean.getId());
+
+            if(mean.getLayers()!=null && mean.getLayers().size()>0){
+                mean.getLayers().forEach(layer -> {
+                    if(layer.getTasks()!=null && layer.getTasks().size()>0){
+                        layer.getTasks().forEach(task -> {
+                            tasksRepository.save(task);
+                        });
+                    }
+                    layersRepository.save(layer);
+                });
+            }
+
             meansRepository.save(mean);
             return;
         }
@@ -82,40 +94,6 @@ public class BasicEventHandler {
         if(event.getEventType() == EventType.DELETE){
             log.info("Deleting mean by id: " + event.getPayload());
             meansRepository.deleteById((String) event.getPayload());
-            return;
-        }
-
-        log.info("Unknown type of event; skipping");
-    }
-
-    public void handleLayersEvent(Event event) throws JsonProcessingException {
-        if(event.getEventType() == EventType.CREATE){
-            Layer layer = mapper.readValue(event.getPayload(), Layer.class);
-            log.info("Creating layer: " + layer.getNum() + ", id: " + layer.getId());
-            layersRepository.save(layer);
-            return;
-        }
-
-        if(event.getEventType() == EventType.DELETE){
-            log.info("Deleting layer by id: " + event.getPayload());
-            layersRepository.deleteById((String) event.getPayload());
-            return;
-        }
-
-        log.info("Unknown type of event; skipping");
-    }
-
-    public void handleTasksEvent(Event event) throws JsonProcessingException {
-        if(event.getEventType() == EventType.CREATE){
-            Task task = mapper.readValue(event.getPayload(), Task.class);
-            log.info("Creating task: " + task.getTitle() + ", id: " + task.getId());
-            tasksRepository.save(task);
-            return;
-        }
-
-        if(event.getEventType() == EventType.DELETE){
-            log.info("Deleting task by id: " + event.getPayload());
-            tasksRepository.deleteById(event.getPayload());
             return;
         }
 

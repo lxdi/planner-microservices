@@ -17,25 +17,27 @@ spring.zipkin.base-url: http://zipkin:9411/
     #spring.datasource.driver-class-name=org.postgresql.Driver
 
 
-spring.cloud.stream.kafka.binder.brokers: kafka-0:9092
-
-spring.cloud.stream.bindings.realms-events.destination: realms-events
-spring.cloud.stream.bindings.realms-events.contentType: application/json
-
-spring.cloud.stream.bindings.targets-events.destination: targets-events
-spring.cloud.stream.bindings.targets-events.contentType: application/json
-
-spring.cloud.stream.bindings.means-events.destination: means-events
-spring.cloud.stream.bindings.means-events.contentType: application/json
-
-spring.cloud.stream.bindings.layers-events.destination: layers-events
-spring.cloud.stream.bindings.layers-events.contentType: application/json
-
-spring.cloud.stream.bindings.tasks-events.destination: tasks-events
-spring.cloud.stream.bindings.tasks-events.contentType: application/json
-
-spring.cloud.stream.bindings.mean-target-relations-events.destination: mean-target-relations-events
-spring.cloud.stream.bindings.mean-target-relations-events.contentType: application/json
+spring.cloud.stream:
+  kafka.binder.brokers: kafka-0:9092
+  bindings:
+    realms-events:
+      destination: realms-events
+      contentType: application/json
+    targets-events:
+      destination: targets-events
+      contentType: application/json
+    means-events:
+      destination: means-events
+      contentType: application/json
+#    layers-events:
+#      destination: layers-events
+#      contentType: application/json
+#    tasks-events:
+#      destination: tasks-events
+#      contentType: application/json
+    mean-target-relations-events:
+      destination: mean-target-relations-events
+      contentType: application/json
 
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json

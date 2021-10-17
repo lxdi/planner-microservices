@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Mean implements Serializable {
     private String realmid;
 
     @Transient
-    private List<Layer> layers;
+    private List<Layer> layers = new ArrayList<>();
 
     public String getId() {
         return id;

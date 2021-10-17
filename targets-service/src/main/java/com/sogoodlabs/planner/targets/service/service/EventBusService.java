@@ -1,7 +1,7 @@
 package com.sogoodlabs.planner.targets.service.service;
 
+import com.sogoodlabs.planner.bus.events.common.channel.TargetsChannels;
 import com.sogoodlabs.planner.data.common.events.Event;
-import com.sogoodlabs.planner.targets.service.streams.BasicMessagesStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
@@ -13,10 +13,10 @@ import org.springframework.util.MimeTypeUtils;
 public class EventBusService {
 
     @Autowired
-    private BasicMessagesStreams streams;
+    private TargetsChannels targetsChannels;
 
     public void publishTargetsEvent(Event event){
-        MessageChannel messageChannel = streams.targetsEvents();
+        MessageChannel messageChannel = targetsChannels.out();
         messageChannel.send(MessageBuilder
                 .withPayload(event)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

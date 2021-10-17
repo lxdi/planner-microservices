@@ -41,16 +41,18 @@ public class MeansCUDService {
         String meanId = UUID.randomUUID().toString();
         mean.setId(meanId);
 
+        if(mean.getLayers()!=null && !mean.getLayers().isEmpty()){
+            log.info("Creating layers for mean: " + meanId);
+            mean.getLayers().forEach(layer -> layersCUDService.createLayer(layer, meanId));
+        }
+
         Event event = new Event();
         event.setEventType(EventType.CREATE);
         event.setPayload(mapper.writeValueAsString(mean));
 
         eventBusService.publishMeanEvent(event);
 
-        if(mean.getLayers()!=null && !mean.getLayers().isEmpty()){
-            log.info("Creating layers for mean: " + meanId);
-            mean.getLayers().forEach(layer -> layersCUDService.createLayer(layer, meanId));
-        }
+
 
     }
 

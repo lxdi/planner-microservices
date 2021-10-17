@@ -32,6 +32,7 @@ dependencies {
 
 //	compile project(':data-model')
 
+	implementation project(':event-bus-common')
 	implementation project(':data-common')
 	implementation(project(":data-model")) {
 		transitive = false

@@ -1,7 +1,7 @@
 package com.sogoodlabs.planner.realms.service.service;
 
+import com.sogoodlabs.planner.bus.events.common.channel.RealmsChannels;
 import com.sogoodlabs.planner.data.common.events.Event;
-import com.sogoodlabs.planner.realms.service.streams.BasicMessagesStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
@@ -13,10 +13,10 @@ import org.springframework.util.MimeTypeUtils;
 public class EventBusService {
 
     @Autowired
-    private BasicMessagesStreams streams;
+    private RealmsChannels realmsChannels;
 
     public void publishEvent(Event event){
-        MessageChannel messageChannel = streams.realmsEvents();
+        MessageChannel messageChannel = realmsChannels.out();
         messageChannel.send(MessageBuilder
                 .withPayload(event)
                 .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)

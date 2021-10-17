@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@RequestMapping(value = "/realms")
 public class MainController {
 
     private static Logger log = LoggerFactory.getLogger(MainController.class.getName());
@@ -37,7 +38,7 @@ public class MainController {
         return "0.0.1";
     }
 
-    @PostMapping("/realms/create")
+    @PostMapping("/create")
     public void createRealm(@RequestBody Realm realm) throws JsonProcessingException {
 
         log.info("Creating realm with title " + realm.getTitle());
@@ -52,7 +53,7 @@ public class MainController {
 
     }
 
-    @DeleteMapping("/realms/delete")
+    @DeleteMapping("/delete")
     public void deleteRealm(@RequestParam String id){
 
         log.info("Deleting realm with id " + id);

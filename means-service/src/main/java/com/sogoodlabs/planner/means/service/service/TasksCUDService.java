@@ -34,11 +34,11 @@ public class TasksCUDService {
         task.setId(UUID.randomUUID().toString());
         task.setLayerid(layerid);
 
-        Event event = new Event();
-        event.setEventType(EventType.CREATE);
-        event.setPayload(mapper.writeValueAsString(task));
-
-        eventBusService.publishTaskEvent(event);
+//        Event event = new Event();
+//        event.setEventType(EventType.CREATE);
+//        event.setPayload(mapper.writeValueAsString(task));
+//
+//        eventBusService.publishTaskEvent(event);
     }
 
     public void deleteTask(@RequestParam String id){

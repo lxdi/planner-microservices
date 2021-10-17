@@ -1,0 +1,37 @@
+
+
+
+def docker = 'docker' //System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')?"docker.cmd":"docker"
+
+task apiGatewayImage(type: Exec){
+    commandLine docker, "build", "--build-arg", "applicationName=api-gateway",
+             "-t", "planner2/api-gateway:$appVersion", "."
+}
+
+task dataAccessServiceImage(type: Exec){
+    commandLine docker, "build", "--build-arg", "applicationName=data-access-service",
+            "-t", "planner2/data-access-service:$appVersion", "."
+}
+
+task realmsServiceImage(type: Exec){
+    commandLine docker, "build", "--build-arg", "applicationName=realms-service",
+            "-t", "planner2/realms-service:$appVersion", "."
+}
+
+task targetsServiceImage(type: Exec){
+    commandLine docker, "build", "--build-arg", "applicationName=targets-service",
+            "-t", "planner2/targets-service:$appVersion", "."
+}
+
+task meansServiceImage(type: Exec){
+    commandLine docker, "build", "--build-arg", "applicationName=means-service",
+            "-t", "planner2/means-service:$appVersion", "."
+}
+
+task buildImageAll(){
+    dependsOn 'apiGatewayImage'
+    dependsOn 'dataAccessServiceImage'
+    dependsOn 'realmsServiceImage'
+    dependsOn 'targetsServiceImage'
+    dependsOn 'meansServiceImage'
+}

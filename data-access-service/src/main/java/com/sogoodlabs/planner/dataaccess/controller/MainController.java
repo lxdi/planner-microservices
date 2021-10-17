@@ -71,7 +71,18 @@ public class MainController {
     @GetMapping("/means/get/all")
     public List<Mean> getMeansAll(){
         List<Mean> result = new ArrayList<>();
-        meansRepository.findAll().iterator().forEachRemaining(result::add);
+
+        meansRepository.findAll().iterator().forEachRemaining(mean -> {
+
+            layersRepository.findByMeanid(mean.getId()).forEach(layer -> {
+                mean.getLayers().add(layer);
+
+                tasksRepository.findByLayerid(layer.getId()).forEach(task -> {
+                    layer.getTasks().add(task);
+                });
+            });
+            result.add(mean);
+        });
         return result;
     }
 

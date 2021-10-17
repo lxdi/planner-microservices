@@ -37,11 +37,11 @@ public class LayersCUDService {
         layer.setId(UUID.randomUUID().toString());
         layer.setMeanid(meanId);
 
-        Event event = new Event();
-        event.setEventType(EventType.CREATE);
-        event.setPayload(mapper.writeValueAsString(layer));
-
-        eventBusService.publishLayerEvent(event);
+//        Event event = new Event();
+//        event.setEventType(EventType.CREATE);
+//        event.setPayload(mapper.writeValueAsString(layer));
+//
+//        eventBusService.publishLayerEvent(event);
 
 
         if(layer.getTasks()!=null && !layer.getTasks().isEmpty()){

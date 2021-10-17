@@ -11,13 +11,20 @@ spring.zipkin.base-url: http://zipkin:9411/
     #spring.datasource.driver-class-name=org.postgresql.Driver
 
 
-spring.cloud.stream.kafka.binder.brokers: kafka-0:9092
+spring.cloud.stream:
+  kafka.binder.brokers: kafka-0:9092
+  bindings:
+    realms-events:
+      destination: realms-events
+      contentType: application/json
 
-spring.cloud.stream.bindings.realms-in.destination: realms-in
-spring.cloud.stream.bindings.realms-in.contentType: application/json
-
-spring.cloud.stream.bindings.realms-events.destination: realms-events
-spring.cloud.stream.bindings.realms-events.contentType: application/json
+#spring.cloud.stream.kafka.binder.brokers: kafka-0:9092
+#
+#spring.cloud.stream.bindings.realms-in.destination: realms-in
+#spring.cloud.stream.bindings.realms-in.contentType: application/json
+#
+#spring.cloud.stream.bindings.realms-events.destination: realms-events
+#spring.cloud.stream.bindings.realms-events.contentType: application/json
 
   #spring.cloud.stream.bindings.api-gateway-bm-out.destination=api-gateway-bm
   #spring.cloud.stream.bindings.api-gateway-bm-out.contentType=application/json
